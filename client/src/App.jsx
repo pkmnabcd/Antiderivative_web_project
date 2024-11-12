@@ -6,6 +6,7 @@ import History from './History.jsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const [user, setUser] = useState(null);
 
   function headerButtonLink(page) {
     if (!(currentPage == page)) {
@@ -27,6 +28,27 @@ function App() {
     }
   }
 
+  let header;
+  if (!user) {
+    header = (
+      <div id="header">
+        <button className="headerButton" onClick={() => {headerButtonLink("home")}}>Home</button>
+        <button className="headerButton" onClick={() => {window.location = "/registration/sign_in"}}>Sign In</button>
+        <button className="headerButton" onClick={() => {window.location = "/registration/sign_up"}}>Register</button>
+      </div>
+    )
+  }
+  else {
+    header = (
+      <div id="header">
+        <button className="headerButton" onClick={() => {headerButtonLink("home")}}>Home</button>
+        <button className="headerButton" onClick={() => {headerButtonLink("userHistory")}}>History</button>
+        <button className="headerButton" onClick={() => {logout()}}>Sign Out</button>
+      </div>
+    )
+  }
+
+
   let component;
   if (currentPage == "home") {
     component = <Home />
@@ -36,10 +58,7 @@ function App() {
 
   return (
     <div id="app-container">
-      <div id="header">
-        <button className="headerButton" onClick={() => {headerButtonLink("home")}}>Home</button>
-        <button className="headerButton" onClick={() => {headerButtonLink("userHistory")}}>History</button>
-      </div>
+      {header}
       {component}
     </div>
   )
