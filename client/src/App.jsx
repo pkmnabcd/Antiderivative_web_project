@@ -22,14 +22,14 @@ function App() {
 
     if (res.ok) {
       // navigate away from the single page app!
-      window.location = "/registration/sign_in/";  // TODO: change this to / later since I want the front page to be accessible to people not logged in.
+      window.location = "/";
     } else {
       // handle logout failed!
     }
   }
 
   let header;
-  if (!user) {
+  if (!user) { // TODO: Figure out how to hear back from the server whether the user is logged in.
     header = (
       <div id="header">
         <button className="headerButton" onClick={() => {headerButtonLink("home")}}>Home</button>
