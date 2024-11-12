@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 class Antiderivative(models.Model):
     id = models.BigAutoField(primary_key=True)
     latexText = models.TextField()
+
+class AntiderivativeFilled(Antiderivative):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
 class Constant(models.Model):
