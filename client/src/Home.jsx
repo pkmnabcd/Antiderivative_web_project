@@ -2,8 +2,12 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import './style.css'
 
-function Home() {
+function Home(props) {
   const [count, setCount] = useState(0);
+  const user = props.user;
+
+  // Get all the unfilled antiderivatives (make antiderivative components)
+  // Make the key of the html elements the antiderivative ID.
 
   return (
     <div id="home-container">
