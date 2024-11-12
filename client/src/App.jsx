@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
-import './App.css'
+import './style.css'
 import Home from './Home.jsx'
 import History from './History.jsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
+
+  function headerButtonLink(page) {
+    if (!(currentPage == page)) {
+      setCurrentPage(page);
+    } else {
+    }
+  }
 
   async function logout() {
     const res = await fetch("/registration/logout/", {
@@ -28,9 +35,13 @@ function App() {
   }
 
   return (
-    <>
+    <div id="app-container">
+      <div id="header">
+        <button className="headerButton" onClick={() => {headerButtonLink("home")}}>Home</button>
+        <button className="headerButton" onClick={() => {headerButtonLink("userHistory")}}>History</button>
+      </div>
       {component}
-    </>
+    </div>
   )
 }
 

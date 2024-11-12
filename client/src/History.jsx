@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
+import './style.css'
 
 function History() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
-      <h1>Antiderivative Calculator</h1>
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
-    </>
+    <div id="history-container">
+      <h1>Temp History Page</h1>
+    </div>
   )
 }
 
