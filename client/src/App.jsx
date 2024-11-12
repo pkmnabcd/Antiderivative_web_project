@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect } from 'react'
 import './App.css'
+import Home from './Home.jsx'
+import History from './History.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState("home");
 
   async function logout() {
     const res = await fetch("/registration/logout/", {
@@ -13,35 +14,22 @@ function App() {
 
     if (res.ok) {
       // navigate away from the single page app!
-      window.location = "/registration/sign_in/";
+      window.location = "/registration/sign_in/";  // TODO: change this to / later since I want the front page to be accessible to people not logged in.
     } else {
       // handle logout failed!
     }
   }
 
+  let component;
+  if (currentPage == "home") {
+    component = <Home />
+  } else if (currentPage == "userHistory") {
+    component = <History />
+  }
+
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <button onClick={logout}>Logout</button>
+      {component}
     </>
   )
 }
