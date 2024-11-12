@@ -1,5 +1,3 @@
-MAKE GIT REPO FOR THIS AND PUT IT ONLINE
-
 # 1. General Overview
 The idea of my app is an antiderivative calculator. It would be used by those who want to double-check their answers for common indefinite integrals. This is useful because sometimes you forget how to do certain kinds of integrals, or sometimes you are unsure how constants affect the integral, so this will hopefully be a helpful resource for integration.
 
