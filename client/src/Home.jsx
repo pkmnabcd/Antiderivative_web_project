@@ -4,33 +4,38 @@ import Antiderivative from './Antiderivative.jsx'
 import './style.css'
 
 function Home(props) {
-  const [count, setCount] = useState(0);
+  const [antiderivatives, setAntiderivatives] = useState([]);
   const user = props.user;
 
-  // TODO: design this function. Either return the IDs of the unfilled antiderivatives.
   async function getAntiderivatives() {
     const res = await fetch("/antiderivatives/", {
       credentials: "same-origin"
     });
 
-    const body = await res.json();
-    console.log(body);
-  }
+    const serverAntiderivatives = await res.json();
+    let newAntiderivatives = [];
+    const keys = Object.keys(serverAntiderivatives);
 
+    for (const key of keys) {
+      const data = serverAntiderivatives[key];
+      newAntiderivatives.push(<div key={data["id"]} className="antiderivative">
+        <Antiderivative
+          data={data}
+          user={user}
+        />
+      </div>);
+    }
+    setAntiderivatives(newAntiderivatives);
+  }
 
   useEffect(() => {
     getAntiderivatives();
   }, []);
 
-  // Get all the unfilled antiderivatives (make antiderivative components)
-  // Make the key of the html elements the antiderivative ID.
-
   return (
     <div id="home-container">
       <h1>Antiderivative Calculator</h1>
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
+      {antiderivatives}
     </div>
   )
 }

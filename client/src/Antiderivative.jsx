@@ -3,19 +3,13 @@ import { useEffect } from 'react'
 import './style.css'
 
 function Antiderivative(props) {
-  const [count, setCount] = useState(0);
   const user = props.user;
-
-  // Get all the unfilled antiderivatives (make antiderivative components)
-  // Make the key of the html elements the antiderivative ID.
+  const data = props.data;
 
   return (
-    <div id="home-container">
-      <h1>Antiderivative Calculator</h1>
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
-    </div>
+    <>
+      <div>{data["latexText"]}</div>
+    </>
   )
 }
 
