@@ -7,7 +7,9 @@ class Antiderivative(models.Model):
     id = models.BigAutoField(primary_key=True)
     latexText = models.TextField()
 
-class AntiderivativeFilled(Antiderivative):
+class FilledAntiderivative(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    latexText = models.TextField()
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
 class Constant(models.Model):
@@ -15,4 +17,10 @@ class Constant(models.Model):
     name = models.TextField()
     value = models.FloatField()
     antiderivative = models.ForeignKey("Antiderivative", on_delete=models.CASCADE)
+
+class FilledConstant(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.TextField()
+    value = models.FloatField()
+    filledAntiderivative = models.ForeignKey("FilledAntiderivative", on_delete=models.CASCADE)
 
