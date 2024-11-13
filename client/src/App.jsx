@@ -8,6 +8,19 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [user, setUser] = useState(null);
 
+  async function getUser() {
+      const res = await fetch('/user/', {
+          credentials: "same-origin",
+      });
+      const body = await res.json();
+      console.log(body);
+      if (!("user" in body)) {
+        setUser(null);
+      } else {
+        setUser(body.user);
+      }
+  }
+
   function headerButtonLink(page) {
     if (!(currentPage == page)) {
       setCurrentPage(page);
@@ -27,6 +40,8 @@ function App() {
       // handle logout failed!
     }
   }
+
+  getUser();
 
   let header;
   if (!user) { // TODO: Figure out how to hear back from the server whether the user is logged in.

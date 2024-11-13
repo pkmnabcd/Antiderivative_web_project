@@ -36,3 +36,9 @@ def getAntiderivatives(req):
         antiderivativeDicts[model.id] = modelDict
     return JsonResponse(antiderivativeDicts)
 
+def getUser(req):
+    if not req.user.is_anonymous:
+        return JsonResponse({"user": model_to_dict(req.user)})
+    else:
+        return JsonResponse({})
+
