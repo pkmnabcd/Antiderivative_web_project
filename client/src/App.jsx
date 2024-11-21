@@ -8,6 +8,10 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
   async function getUser() {
       const res = await fetch('/user/', {
           credentials: "same-origin",
@@ -40,8 +44,6 @@ function App() {
       // handle logout failed!
     }
   }
-
-  getUser();
 
   let header;
   if (!user) { // TODO: Figure out how to hear back from the server whether the user is logged in.
