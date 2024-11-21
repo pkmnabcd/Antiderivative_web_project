@@ -68,9 +68,9 @@ function App() {
 
   let component;
   if (currentPage == "home") {
-    component = <Home user={user}/>
+    component = <Home user={user} />
   } else if (currentPage == "userHistory") {
-    component = <History />
+    component = <History user={user} />
   } else {
     component = <h1>Page Not Found!</h1>
   }

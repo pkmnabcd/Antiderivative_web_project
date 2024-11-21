@@ -42,3 +42,7 @@ def getUser(req):
     else:
         return JsonResponse({})
 
+@login_required
+def getHistory(req):
+    print(req.user)
+    return JsonResponse({})

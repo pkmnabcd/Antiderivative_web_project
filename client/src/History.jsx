@@ -2,8 +2,20 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import './style.css'
 
-function History() {
+function History(props) {
   const [count, setCount] = useState(0);
+
+  const user = props.user;
+
+  async function getHistory() {
+    const res = await fetch("/history/", {
+      credentials: "same-origin"
+    });
+  }
+
+  useEffect(() => {
+    getHistory();
+  }, []);
 
   return (
     <div id="history-container">
