@@ -11,6 +11,8 @@ function History(props) {
     const res = await fetch("/history/", {
       credentials: "same-origin"
     });
+    const serverHistory = await res.json();
+    console.log(serverHistory);
   }
 
   useEffect(() => {

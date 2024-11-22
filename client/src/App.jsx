@@ -17,7 +17,6 @@ function App() {
           credentials: "same-origin",
       });
       const body = await res.json();
-      console.log(body);
       if (!("user" in body)) {
         setUser(null);
       } else {

@@ -44,5 +44,18 @@ def getUser(req):
 
 @login_required
 def getHistory(req):
-    print(req.user)
-    return JsonResponse({})
+    # Note: this tacetly assumes that this returns in order by id in ascending order.
+    antiderivatives = req.user.filledantiderivative_set.all()
+    antiderivatives = reversed(antiderivatives)
+
+    antiderDicts = {}
+    countNeeded = 10  # Only want the most recent 10.
+    for antider in antiderivatives:
+        if countNeeded == 0: break
+        constants = antider.filledconstant_set.all()
+        modelDict = model_to_dict(antider)
+        for const in constants:
+            modelDict[const.name] = const.value
+        antiderDicts[antider.id] = modelDict
+        countNeeded -= 1
+    return JsonResponse(antiderDicts)
