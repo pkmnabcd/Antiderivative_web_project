@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
-import Antiderivative from './Antiderivative.jsx'
+import FilledAntiderivative from './FilledAntiderivative.jsx'
 import './style.css'
 
 function History(props) {
@@ -8,7 +8,6 @@ function History(props) {
 
   const user = props.user;
 
-  // TODO: Make FilledAntiderivative component and change this to reflect that
   async function getHistory() {
     const res = await fetch("/history/", {
       credentials: "same-origin"
@@ -20,8 +19,8 @@ function History(props) {
 
     for (const key of keys) {
       const data = serverHistory[key];
-      newHistory.push(<div key={data["id"]} className="antiderivative">
-        <Antiderivative
+      newHistory.push(<div key={data["id"]} className="filled-antiderivative">
+        <FilledAntiderivative
           data={data}
           user={user}
         />
