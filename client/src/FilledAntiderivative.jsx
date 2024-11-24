@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import './style.css'
 
-function Antiderivative(props) {
+function FilledAntiderivative(props) {
   const user = props.user;
   const data = props.data;
 
@@ -13,4 +13,4 @@ function Antiderivative(props) {
   )
 }
 
-export default Antiderivative;
+export default FilledAntiderivative;
