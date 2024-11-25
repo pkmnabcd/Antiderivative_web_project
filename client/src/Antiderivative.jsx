@@ -46,6 +46,7 @@ function Antiderivative(props) {
       <MathComponent tex={data["latexText"]} />
       <form className="const-container" onSubmit={handleSubmit}>
         {constantComponents}
+        <button>Get Solution</button>
       </form>
     </>
   )
