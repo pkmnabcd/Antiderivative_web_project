@@ -10,7 +10,7 @@ function FilledAntiderivative(props) {
   return (
     <>
       <div>{data["latexText"]}</div>
-      <MathComponent tex={String.raw`\int_0^1 x^2\ dx`} />
+      <MathComponent tex={data["latexText"]} />
     </>
   )
 }
