@@ -9,18 +9,33 @@ function Antiderivative(props) {
   const [constInputs, setConstInputs] = useState({});
   const user = props.user;
   const data = props.data;
-  console.log(data);
 
-  let constants = [];
+  function setConstInput(key, inputText) {
+    let newConstState = constInputs;
+    if (inputText === "" || isNaN(parseFloat(inputText))) {
+      newConstState[key] = null;
+    } else {
+      newConstState[key] = parseFloat(inputText);
+    }
+    setConstInputs(newConstState);
+  }
+
+  // TODO: write this, adding to the history, and changing the page to the solution page.
+  function handleSubmit() {
+  }
+
+  let constantComponents = [];
+  let newConstState = {};
   const dataKeys = Object.keys(data);
 
-  // TODO: Figure out how to implement state here
-  // Have the state be accessible by the constKey
   for (const key of dataKeys) {
     if (key.length === 1) {
-      constants.push(<div key={constKeys[key]} className="const">
+      constantComponents.push(<div key={constKeys[key]} className="const">
         <span>Set {key}: </span>
-        <input type="text"/>
+        <input type="text"
+          value={newConstState[key]}
+          onChange={(e) => setConstInput(key, e.target.value)}
+        />
       </div>);
     }
   }
@@ -29,8 +44,8 @@ function Antiderivative(props) {
     <>
       <div>{data["latexText"]}</div>
       <MathComponent tex={data["latexText"]} />
-      <form className="const-container">
-        {constants}
+      <form className="const-container" onSubmit={handleSubmit}>
+        {constantComponents}
       </form>
     </>
   )
