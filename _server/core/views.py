@@ -59,3 +59,8 @@ def getHistory(req):
         antiderDicts[antider.id] = modelDict
         countNeeded -= 1
     return JsonResponse(antiderDicts)
+
+def solveAndSaveAntiderivative(req):
+    # TODO: Make sure that you check if the user isn't anonymous when saving.
+    if req.method == "POST":
+        print(req)

@@ -6,4 +6,5 @@ urlpatterns = [
     path("user/", view=views.getUser, name="getUser"),
     path("antiderivatives/", view=views.getAntiderivatives, name="getAntiderivatives"),
     path("history/", view=views.getHistory, name="getHistory"),
+    path("solve/", view=views.solveAndSaveAntiderivative, name="solveAndSaveAntiderivative"),
 ]
