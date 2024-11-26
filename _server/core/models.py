@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 
 class Antiderivative(models.Model):
     id = models.BigAutoField(primary_key=True)
-    latexText = models.TextField()
+    inputLatex = models.TextField()
+    solutionTemplate = models.TextField()
 
 class FilledAntiderivative(models.Model):
     id = models.BigAutoField(primary_key=True)
-    latexText = models.TextField()
+    preSolutionLatex = models.TextField()
+    postSolutionLatex = models.TextField()
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
 class Constant(models.Model):

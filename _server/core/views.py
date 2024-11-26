@@ -62,8 +62,6 @@ def getHistory(req):
 
 def solveAndSaveAntiderivative(req):
     # TODO: Make sure that you check if the user isn't anonymous when saving.
-    print(req)
-    print(req.method)
     if req.method == "POST":
-        print("Is POST")
+        body = json.loads(req.body)
     return JsonResponse({})

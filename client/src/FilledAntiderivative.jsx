@@ -9,8 +9,8 @@ function FilledAntiderivative(props) {
 
   return (
     <>
-      <div>{data["latexText"]}</div>
-      <MathComponent tex={data["latexText"]} />
+      <div>{data["postSolutionLatex"]}</div>
+      <MathComponent tex={data["postSolutionLatex"]} />
     </>
   )
 }

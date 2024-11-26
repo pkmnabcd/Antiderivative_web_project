@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { MathComponent } from 'mathjax-react';
-import cookie from "cookie";
+import * as cookie from "cookie";
 import './style.css';
 
 const constKeys = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7};
@@ -16,8 +16,10 @@ function Antiderivative(props) {
     let newConstState = constInputs;
     if (inputText === "" || isNaN(parseFloat(inputText))) {
       newConstState[key] = undefined;
+      console.log(newConstState);
     } else {
       newConstState[key] = parseFloat(inputText);
+      console.log(newConstState);
     }
     setConstInputs(newConstState);
   }
@@ -25,12 +27,12 @@ function Antiderivative(props) {
   // TODO: write this, adding to the history, and changing the page to the solution page.
   async function handleSubmit(e) {
     e.preventDefault();
+    // TODO: Make it so if either constant is undefined, don't submit, and display warning
+    console.log(JSON.stringify({constants: constInputs}));
     const res = await fetch("/solve/", {
       credentials: "same-origin",
       method: "POST",
-      data: JSON.stringify({
-        constInputs
-        }),
+      body: JSON.stringify({ constants: constInputs }),
       headers: {
         "Content-Type": "application/json",
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
@@ -62,8 +64,8 @@ function Antiderivative(props) {
 
   return (
     <>
-      <div>{data["latexText"]}</div>
-      <MathComponent tex={data["latexText"]} />
+      <div>{data["inputLatex"]}</div>
+      <MathComponent tex={data["inputLatex"]} />
       <form className="const-container" onSubmit={handleSubmit}>
         {constComponents}
         <button>Get Solution</button>
