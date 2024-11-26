@@ -8,6 +8,8 @@ from django.forms.models import model_to_dict
 
 from .models import FilledConstant, Constant, Antiderivative, FilledAntiderivative
 
+from .solving import parseAndEvaluateCurlys
+
 # Load manifest when server launches
 MANIFEST = {}
 if not settings.DEBUG:
@@ -73,4 +75,5 @@ def solveAndSaveAntiderivative(req):
         print(solutionTemplate)
         # TODO: parse the solution template, run code inside if more than a variable name
         # Maybe make a file for the solution parsing
+        solution = parseAndEvaluateCurlys(solutionTemplate, constants, True)
     return JsonResponse({})
