@@ -64,4 +64,13 @@ def solveAndSaveAntiderivative(req):
     # TODO: Make sure that you check if the user isn't anonymous when saving.
     if req.method == "POST":
         body = json.loads(req.body)
+        constants = body["constants"]
+        antiderivativeId = body["antiderivativeId"]
+        print(antiderivativeId)
+        print(constants)
+        antiderivative = Antiderivative.objects.get(id=antiderivativeId)
+        solutionTemplate = antiderivative.solutionTemplate
+        print(solutionTemplate)
+        # TODO: parse the solution template, run code inside if more than a variable name
+        # Maybe make a file for the solution parsing
     return JsonResponse({})

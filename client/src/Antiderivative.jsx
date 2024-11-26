@@ -32,7 +32,10 @@ function Antiderivative(props) {
     const res = await fetch("/solve/", {
       credentials: "same-origin",
       method: "POST",
-      body: JSON.stringify({ constants: constInputs }),
+      body: JSON.stringify({
+        constants: constInputs,
+        antiderivativeId: data["id"],
+      }),
       headers: {
         "Content-Type": "application/json",
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
