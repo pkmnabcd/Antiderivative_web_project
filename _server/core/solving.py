@@ -40,17 +40,36 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
         return "Error! Unexpected Input inside brackets"
     elif innerCurlysPresent:
         curlyCount = len(openCurlysList)
-        # NOTE: This is banking on there not being identical inner substrings, which *should* be fine for now.
-        substringsToReplace = []
+        substringsToReplace = {}
+        count = 0
         for i in range(curlyCount):
             openCurlyIndex = openCurlysList[i]
             closeCurlyIndex = closeCurlysList[i]
-            substringsToReplace.append(substring[openCurlyIndex + 2 : closeCurlyIndex])
+            innerStartIndex = openCurlyIndex + 2
+
+            innerSubstring = substring[innerStartIndex : closeCurlyIndex]
+            substringsToReplace[count] = {"innerSubstring": innerSubstring, "len": (len(innerSubstring) + 4), "position": openCurlyIndex}
+            count += 1
         print(substringsToReplace)
 
-        for innerSubstring in substringsToReplace:
+        for i in range(len(substringsToReplace)):
+            innerData = substringsToReplace[i]
+            print(innerData)
+            innerSubstring = innerData["innerSubstring"]
+            innerLen = innerData["len"]
+            innerPosition = innerData["position"]
+
             replaceString = parseAndEvaluateCurlys(innerSubstring, constants, False)
-            substring = substring.replace(innerSubstring, replaceString)
+            replacementDelta = len(replaceString) - len(innerSubstring)
+            for j in range(i+1, len(substringsToReplace)):
+                substringsToReplace[j]["position"] += (replacementDelta - 4)
+
+            removeStart = innerPosition
+            removeEnd = innerPosition + innerLen - 1
+            print("removeStart:", str(removeStart), "\nremoveEnd:", str(removeEnd))
+            # Taking out old, putting in replacement
+            substring = substring[ : innerPosition] + replaceString + substring[removeEnd + 1 : ]
+            print(substring)
 
         if isFirst:
             return substring
