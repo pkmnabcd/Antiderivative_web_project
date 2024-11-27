@@ -6,32 +6,30 @@ def evaluateFinishedCurlys(inside, constants):
         print("Implement me")
 
 def findMatchingCurlys(substring):
-    # TODO: Do I need this stuff before the while loop? Just set curlyCount to 0?
     openCurlysList = []
     closeCurlysList = []
 
-    openCurlys = substring.find("{{")
-    if openCurlys == -1:
-        return openCurlysList, closeCurlysList
-    else:
-        # TODO: Update below with the new variable names and structure
-        startIndex = openCurlys + 2
-        currentIndex = startIndex
-        curlyCount = 1
-        # TODO: Make sure the case {{{{a}}+1}} is handled (skip an index when {{ or }} found
-        while currentIndex < len(substring) - 1:
-            if substring[currentIndex : currentIndex + 2] == "{{":
-                curlyCount += 1
-                currentIndex += 2
-            elif substring[currentIndex : currentIndex + 2] == "}}":
-                curlyCount -= 1
-                currentIndex += 2
-                if curlyCount = 0
-                    closeCurlysList.append(currentIndex)
-            else:
-                currentIndex += 1
+    # TODO: Update below with the new variable names and structure
+    currentIndex = 0
+    curlyCount = 0
+    # TODO: Make sure the case {{{{a}}+1}} is handled (skip an index when {{ or }} found
+    while currentIndex < len(substring) - 1:
+        print(currentIndex)
+        print(substring[currentIndex : currentIndex + 2])
+        if substring[currentIndex : currentIndex + 2] == "{{":
+            if curlyCount == 0:
+                openCurlysList.append(currentIndex)
+            curlyCount += 1
+            currentIndex += 2
+        elif substring[currentIndex : currentIndex + 2] == "}}":
+            curlyCount -= 1
+            if curlyCount == 0:
+                closeCurlysList.append(currentIndex)
+            currentIndex += 2
+        else:
+            currentIndex += 1
 
-    return firstCurlys, lastCurlys
+    return openCurlysList, closeCurlysList
 
 def parseAndEvaluateCurlys(substring, constants, isFirst):
     """
