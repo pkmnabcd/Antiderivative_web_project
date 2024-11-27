@@ -1,7 +1,7 @@
 def evaluateFinishedCurlys(inside, constants):
-    if len(substring) == 1:
+    if len(inside) == 1:
         # Assume this is a constant
-        return str(constants[substring])
+        return str(constants[inside])
     else:
         print("Implement me")
 
@@ -9,13 +9,9 @@ def findMatchingCurlys(substring):
     openCurlysList = []
     closeCurlysList = []
 
-    # TODO: Update below with the new variable names and structure
     currentIndex = 0
     curlyCount = 0
-    # TODO: Make sure the case {{{{a}}+1}} is handled (skip an index when {{ or }} found
     while currentIndex < len(substring) - 1:
-        print(currentIndex)
-        print(substring[currentIndex : currentIndex + 2])
         if substring[currentIndex : currentIndex + 2] == "{{":
             if curlyCount == 0:
                 openCurlysList.append(currentIndex)
@@ -35,29 +31,35 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
     """
     This function is recursive. It takes the solution template, and returns the evaluated text
     """
-    firstCurlys = substring.find("{{")
-    lastCurlys = substring.rfind("}}")
-    print(firstCurlys)
-    print(lastCurlys)
-    haveBothSets = not (firstCurlys == -1 and lastCurlys == -1)
-    haveNeitherSets = firstCurlys == -1 and lastCurlys == -1
-    if haveBothSets:
-        innerSubstring = substring[firstCurlys + 2 : lastCurlys]
-        print(innerSubstring)
-        replaceString = parseAndEvaluateCurlys(innerSubstring, constants, False)
-        substring = substring.replace(innerString, replaceString)
-        if isFirst:
-            return substring
-        else:
-            return evaluateFinishedCurlys(substring, constants)
-        # TODO: repeat in case there are more  to do? Evaluate ?
+    openCurlysList, closeCurlysList = findMatchingCurlys(substring)
+    unequalCurlys = len(openCurlysList) != len(closeCurlysList)
+    innerCurlysPresent = len(openCurlysList) != 0
 
-    elif haveNeitherSets:
-        print("No Curlys")
+    if unequalCurlys:
+        print("Unexpected Input")
+        return "Error! Unexpected Input inside brackets"
+    elif innerCurlysPresent:
+        curlyCount = len(openCurlysList)
+        # NOTE: This is banking on there not being identical inner substrings, which *should* be fine for now.
+        substringsToReplace = []
+        for i in range(curlyCount):
+            openCurlyIndex = openCurlysList[i]
+            closeCurlyIndex = closeCurlysList[i]
+            substringsToReplace.append(substring[openCurlyIndex + 2 : closeCurlyIndex])
+        print(substringsToReplace)
+
+        for innerSubstring in substringsToReplace:
+            replaceString = parseAndEvaluateCurlys(innerSubstring, constants, False)
+            substring = substring.replace(innerSubstring, replaceString)
+
         if isFirst:
             return substring
         else:
             return evaluateFinishedCurlys(substring, constants)
     else:
-        print("Unexpected Input")
-        return "Error! Unexpected Input inside brackets"
+        print("No Curlys")
+        if isFirst:
+            return substring
+        else:
+            return evaluateFinishedCurlys(substring, constants)
+
