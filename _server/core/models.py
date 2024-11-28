@@ -17,12 +17,5 @@ class FilledAntiderivative(models.Model):
 class Constant(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.TextField()
-    value = models.FloatField()
     antiderivative = models.ForeignKey("Antiderivative", on_delete=models.CASCADE)
-
-class FilledConstant(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    name = models.TextField()
-    value = models.FloatField()
-    filledAntiderivative = models.ForeignKey("FilledAntiderivative", on_delete=models.CASCADE)
 

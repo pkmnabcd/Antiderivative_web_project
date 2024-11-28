@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.forms.models import model_to_dict
 
-from .models import FilledConstant, Constant, Antiderivative, FilledAntiderivative
+from .models import Constant, Antiderivative, FilledAntiderivative
 from .solving import parseAndEvaluateCurlys, removeCurlys
 
 # Load manifest when server launches
@@ -34,7 +34,7 @@ def getAntiderivatives(req):
         modelDict = model_to_dict(model)
         modelDict["inputLatex"] = removeCurlys(modelDict["inputLatex"])
         for const in constants:
-            modelDict[const.name] = const.value
+            modelDict[const.name] = const.name
         antiderivativeDicts[model.id] = modelDict
     return JsonResponse(antiderivativeDicts)
 
@@ -46,7 +46,7 @@ def getUser(req):
 
 @login_required
 def getHistory(req):
-    # Note: this tacetly assumes that this returns in order by id in ascending order.
+    # NOTE: this tacetly assumes that this returns in order by id in ascending order.
     antiderivatives = req.user.filledantiderivative_set.all()
     antiderivatives = reversed(antiderivatives)
 
@@ -54,16 +54,12 @@ def getHistory(req):
     countNeeded = 10  # Only want the most recent 10.
     for antider in antiderivatives:
         if countNeeded == 0: break
-        constants = antider.filledconstant_set.all()
         modelDict = model_to_dict(antider)
-        for const in constants:
-            modelDict[const.name] = const.value
         antiderDicts[antider.id] = modelDict
         countNeeded -= 1
     return JsonResponse(antiderDicts)
 
 def solveAndSaveAntiderivative(req):
-    # TODO: Make sure that you check if the user isn't anonymous when saving.
     if req.method == "POST":
         body = json.loads(req.body)
         constants = body["constants"]
@@ -79,7 +75,6 @@ def solveAndSaveAntiderivative(req):
         solution = parseAndEvaluateCurlys(solutionTemplate, constants, isFirst=True)
         print(input)
         print(solution)
-        # TODO: get the antiderivative inputLatex as well, parse it, and add them to a FilledAntiderivative
         if not req.user.is_anonymous:
             # TODO: See whether we need FilledConstants or not
             filledAntiderivative = FilledAntiderivative(preSolutionLatex=input, postSolutionLatex=solution, user=req.user)
