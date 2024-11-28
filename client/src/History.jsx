@@ -26,6 +26,7 @@ function History(props) {
         />
       </div>);
     }
+    newHistory.reverse();
     setHistory(newHistory);
 
   }
