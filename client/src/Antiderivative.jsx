@@ -41,6 +41,12 @@ function Antiderivative(props) {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
       }
     });
+    const serverSolution = await res.json();
+    console.log(serverSolution);
+    const input = serverSolution["input"];
+    const solution = serverSolution["solution"];
+    console.log(input);
+    console.log(solution);
   }
 
   useEffect(() => {
