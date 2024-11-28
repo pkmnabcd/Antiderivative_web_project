@@ -1,9 +1,11 @@
+from sys import stderr
+
 def evaluateFinishedCurlys(inside, constants):
     if len(inside) == 1:
         # Assume this is a constant
         return str(constants[inside])
     else:
-        print("Implement me")
+        print("Implement me", file=stderr)
 
 def findMatchingCurlys(substring):
     openCurlysList = []
