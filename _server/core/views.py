@@ -7,7 +7,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 from django.forms.models import model_to_dict
 
 from .models import FilledConstant, Constant, Antiderivative, FilledAntiderivative
-from .solving import parseAndEvaluateCurlys
+from .solving import parseAndEvaluateCurlys, removeCurlys
 
 # Load manifest when server launches
 MANIFEST = {}
@@ -32,6 +32,7 @@ def getAntiderivatives(req):
     for model in antiderivatives:
         constants = model.constant_set.all()
         modelDict = model_to_dict(model)
+        modelDict["inputLatex"] = removeCurlys(modelDict["inputLatex"])
         for const in constants:
             modelDict[const.name] = const.value
         antiderivativeDicts[model.id] = modelDict
@@ -80,6 +81,7 @@ def solveAndSaveAntiderivative(req):
         print(solution)
         # TODO: get the antiderivative inputLatex as well, parse it, and add them to a FilledAntiderivative
         if not req.user.is_anonymous:
+            # TODO: See whether we need FilledConstants or not
             filledAntiderivative = FilledAntiderivative(preSolutionLatex=input, postSolutionLatex=solution, user=req.user)
             filledAntiderivative.save()
         return JsonResponse({"input": input, "solution": solution})

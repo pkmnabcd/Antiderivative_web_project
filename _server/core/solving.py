@@ -84,3 +84,15 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
         else:
             return evaluateFinishedCurlys(substring, constants)
 
+def removeCurlys(input):
+    output = input
+    loopEnd = len(input) - 1
+    i = 0
+    while i < loopEnd:
+        testString = output[i : i+2]
+        if testString == "{;" or testString == ";}":
+            output = output[0:i] + output[i+2 :]
+            loopEnd -= 2
+        else:
+            i += 1
+    return output
