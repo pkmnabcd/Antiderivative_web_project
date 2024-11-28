@@ -3,11 +3,10 @@ from django.conf  import settings
 import json
 import os
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.forms.models import model_to_dict
 
 from .models import FilledConstant, Constant, Antiderivative, FilledAntiderivative
-
 from .solving import parseAndEvaluateCurlys
 
 # Load manifest when server launches
@@ -72,8 +71,16 @@ def solveAndSaveAntiderivative(req):
         print(constants)
         antiderivative = Antiderivative.objects.get(id=antiderivativeId)
         solutionTemplate = antiderivative.solutionTemplate
+        inputLatex = antiderivative.inputLatex
         print(solutionTemplate)
-        # TODO: parse the solution template, run code inside if more than a variable name
-        # Maybe make a file for the solution parsing
-        solution = parseAndEvaluateCurlys(solutionTemplate, constants, True)
-    return JsonResponse({})
+        print(inputLatex)
+        input = parseAndEvaluateCurlys(inputLatex, constants, isFirst=True)
+        solution = parseAndEvaluateCurlys(solutionTemplate, constants, isFirst=True)
+        print(input)
+        print(solution)
+        # TODO: get the antiderivative inputLatex as well, parse it, and add them to a FilledAntiderivative
+        if not req.user.is_anonymous:
+            filledAntiderivative = FilledAntiderivative(preSolutionLatex=input, postSolutionLatex=solution, user=req.user)
+            filledAntiderivative.save()
+        return JsonResponse({"input": input, "solution": solution})
+    return HttpResponseNotAllowed()

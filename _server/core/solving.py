@@ -14,12 +14,12 @@ def findMatchingCurlys(substring):
     currentIndex = 0
     curlyCount = 0
     while currentIndex < len(substring) - 1:
-        if substring[currentIndex : currentIndex + 2] == "{{":
+        if substring[currentIndex : currentIndex + 2] == "{;":
             if curlyCount == 0:
                 openCurlysList.append(currentIndex)
             curlyCount += 1
             currentIndex += 2
-        elif substring[currentIndex : currentIndex + 2] == "}}":
+        elif substring[currentIndex : currentIndex + 2] == ";}":
             curlyCount -= 1
             if curlyCount == 0:
                 closeCurlysList.append(currentIndex)
