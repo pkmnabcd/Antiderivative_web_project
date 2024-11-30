@@ -7,6 +7,8 @@ function Home(props) {
   const [antiderivatives, setAntiderivatives] = useState([]);
 
   const user = props.user;
+  const setSolutionData = props.setSolutionData;
+  const setCurrentPage = props.setCurrentPage;
 
   async function getAntiderivatives() {
     const res = await fetch("/antiderivatives/", {
@@ -23,6 +25,8 @@ function Home(props) {
         <Antiderivative
           data={data}
           user={user}
+          setSolutionData={setSolutionData}
+          setCurrentPage={setCurrentPage}
         />
       </div>);
     }

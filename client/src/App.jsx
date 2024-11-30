@@ -3,10 +3,14 @@ import { useEffect } from 'react'
 import './style.css'
 import Home from './Home.jsx'
 import History from './History.jsx'
+import Solution from './Solution.jsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [user, setUser] = useState(null);
+  // TODO: Use this and make the solution component
+  // and pass the relevant state to Home and to Antiderivative.
+  const [solutionData, setSolutionData] = useState({});
 
   useEffect(() => {
     getUser();
@@ -67,9 +71,15 @@ function App() {
 
   let component;
   if (currentPage == "home") {
-    component = <Home user={user} />
+    component = <Home 
+      user={user}
+      setSolutionData={setSolutionData}
+      setCurrentPage={setCurrentPage}
+    />
   } else if (currentPage == "userHistory") {
     component = <History user={user} />
+  } else if (currentPage == "solution") {
+    component = <Solution solutionData={solutionData} />
   } else {
     component = <h1>Page Not Found!</h1>
   }

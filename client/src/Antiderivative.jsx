@@ -11,6 +11,8 @@ function Antiderivative(props) {
   const [constComponents, setConstComponents] = useState(null);
   const user = props.user;
   const data = props.data;
+  const setSolutionData = props.setSolutionData;
+  const setCurrentPage = props.setCurrentPage;
 
   function setConstInput(key, inputText) {
     let newConstState = constInputs;
@@ -24,7 +26,6 @@ function Antiderivative(props) {
     setConstInputs(newConstState);
   }
 
-  // TODO: write this, adding to the history, and changing the page to the solution page.
   async function handleSubmit(e) {
     e.preventDefault();
     // TODO: Make it so if either constant is undefined, don't submit, and display warning
@@ -42,11 +43,14 @@ function Antiderivative(props) {
       }
     });
     const serverSolution = await res.json();
-    console.log(serverSolution);
     const input = serverSolution["input"];
     const solution = serverSolution["solution"];
-    console.log(input);
-    console.log(solution);
+    const solutionState = {
+      setup: input,
+      solution: solution,
+    };
+    setSolutionData(solutionState);
+    setCurrentPage("solution");
   }
 
   useEffect(() => {

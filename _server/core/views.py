@@ -76,7 +76,6 @@ def solveAndSaveAntiderivative(req):
         print(input)
         print(solution)
         if not req.user.is_anonymous:
-            # TODO: See whether we need FilledConstants or not
             filledAntiderivative = FilledAntiderivative(preSolutionLatex=input, postSolutionLatex=solution, user=req.user)
             filledAntiderivative.save()
         return JsonResponse({"input": input, "solution": solution})
