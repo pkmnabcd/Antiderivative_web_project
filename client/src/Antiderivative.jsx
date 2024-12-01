@@ -9,13 +9,12 @@ const constKeys = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7};
 function Antiderivative(props) {
   const [constInputs, setConstInputs] = useState({});
   const [constComponents, setConstComponents] = useState(null);
+  const [warningComponent, setWarningComponent] = useState(<div className="constantWarning"> </div>);
 
   const user = props.user;
   const data = props.data;
   const setSolutionData = props.setSolutionData;
   const setCurrentPage = props.setCurrentPage;
-
-  let warning = <div className="constantWarning"> </div>
 
   function setConstInput(key, inputText) {
     let newConstState = constInputs;
@@ -61,11 +60,11 @@ function Antiderivative(props) {
         setup: input,
         solution: solution,
       };
-      warning = <div className="constantWarning"></div>
+      setWarningComponent(<div className="constantWarning"></div>);
       setSolutionData(solutionState);
       setCurrentPage("solution");
     } else {  // NOTE: Invalid Input
-      warning = <div className="constantWarning">Make sure that all the constants have numerical values inside, and are all filled out.</div>
+      setWarningComponent(<div className="constantWarning">Make sure that all the constants have numerical values inside, and that are all filled out.</div>);
     }
   }
 
@@ -90,7 +89,6 @@ function Antiderivative(props) {
     setConstComponents(newConstantComponents);
   }, []);
 
-
   return (
     <>
       <div>{data["inputLatex"]}</div>
@@ -99,7 +97,7 @@ function Antiderivative(props) {
         {constComponents}
         <button>Get Solution</button>
       </form>
-      {warning}
+      {warningComponent}
     </>
   )
 }
