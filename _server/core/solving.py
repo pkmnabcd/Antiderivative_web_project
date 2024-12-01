@@ -38,7 +38,7 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
     innerCurlysPresent = len(openCurlysList) != 0
 
     if unequalCurlys:
-        print("Unexpected Input with the input substring: " + substring)
+        print("Unexpected Input with the input substring: " + substring, file=stderr)
         return "Error! Unexpected Input inside brackets"
     elif innerCurlysPresent:
         curlyCount = len(openCurlysList)
