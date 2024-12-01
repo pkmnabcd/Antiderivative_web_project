@@ -9,10 +9,13 @@ const constKeys = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7};
 function Antiderivative(props) {
   const [constInputs, setConstInputs] = useState({});
   const [constComponents, setConstComponents] = useState(null);
+
   const user = props.user;
   const data = props.data;
   const setSolutionData = props.setSolutionData;
   const setCurrentPage = props.setCurrentPage;
+
+  let warning = <div className="constantWarning"> </div>
 
   function setConstInput(key, inputText) {
     let newConstState = constInputs;
@@ -28,29 +31,42 @@ function Antiderivative(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // TODO: Make it so if either constant is undefined, don't submit, and display warning
-    console.log(JSON.stringify({constants: constInputs}));
-    const res = await fetch("/solve/", {
-      credentials: "same-origin",
-      method: "POST",
-      body: JSON.stringify({
-        constants: constInputs,
-        antiderivativeId: data["id"],
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+    // TODO: Validate that the warning works
+    let validInputs = true;
+    const constInputKeys = Object.keys(constInputs);
+    for (const key of constInputKeys) {
+      if (constInputs[key] === undefined) {
+        validInputs = false;
       }
-    });
-    const serverSolution = await res.json();
-    const input = serverSolution["input"];
-    const solution = serverSolution["solution"];
-    const solutionState = {
-      setup: input,
-      solution: solution,
-    };
-    setSolutionData(solutionState);
-    setCurrentPage("solution");
+    }
+
+    if (validInputs) {
+      console.log(JSON.stringify({constants: constInputs}));
+      const res = await fetch("/solve/", {
+        credentials: "same-origin",
+        method: "POST",
+        body: JSON.stringify({
+          constants: constInputs,
+          antiderivativeId: data["id"],
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
+        }
+      });
+      const serverSolution = await res.json();
+      const input = serverSolution["input"];
+      const solution = serverSolution["solution"];
+      const solutionState = {
+        setup: input,
+        solution: solution,
+      };
+      warning = <div className="constantWarning"></div>
+      setSolutionData(solutionState);
+      setCurrentPage("solution");
+    } else {  // NOTE: Invalid Input
+      warning = <div className="constantWarning">Make sure that all the constants have numerical values inside, and are all filled out.</div>
+    }
   }
 
   useEffect(() => {
@@ -83,6 +99,7 @@ function Antiderivative(props) {
         {constComponents}
         <button>Get Solution</button>
       </form>
+      {warning}
     </>
   )
 }
