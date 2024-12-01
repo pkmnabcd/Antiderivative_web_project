@@ -7,10 +7,11 @@ function FilledAntiderivative(props) {
   const user = props.user;
   const data = props.data;
 
+  const math = data["preSolutionLatex"] + " = " + data["postSolutionLatex"];
+
   return (
     <>
-      <div>{data["postSolutionLatex"]}</div>
-      <MathComponent tex={data["postSolutionLatex"]} />
+      <MathComponent tex={math} />
     </>
   )
 }

@@ -88,7 +88,6 @@ function Antiderivative(props) {
 
   return (
     <>
-      <div>{data["inputLatex"]}</div>
       <MathComponent tex={data["inputLatex"]} />
       <form className="const-container" onSubmit={handleSubmit}>
         {constComponents}

@@ -36,7 +36,7 @@ function History(props) {
 
   return (
     <div id="history-container">
-      <h1>Temp History Page</h1>
+      <h1>History</h1>
       {history}
     </div>
   )
