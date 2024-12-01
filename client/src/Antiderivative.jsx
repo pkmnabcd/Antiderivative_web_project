@@ -20,10 +20,8 @@ function Antiderivative(props) {
     let newConstState = constInputs;
     if (inputText === "" || isNaN(parseFloat(inputText))) {
       newConstState[key] = undefined;
-      console.log(newConstState);
     } else {
       newConstState[key] = parseFloat(inputText);
-      console.log(newConstState);
     }
     setConstInputs(newConstState);
   }
@@ -40,7 +38,6 @@ function Antiderivative(props) {
     }
 
     if (validInputs) {
-      console.log(JSON.stringify({constants: constInputs}));
       const res = await fetch("/solve/", {
         credentials: "same-origin",
         method: "POST",

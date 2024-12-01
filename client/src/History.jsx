@@ -13,7 +13,6 @@ function History(props) {
       credentials: "same-origin"
     });
     const serverHistory = await res.json();
-    console.log(serverHistory);
     let newHistory = [];
     const keys = Object.keys(serverHistory);
 

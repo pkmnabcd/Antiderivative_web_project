@@ -64,17 +64,11 @@ def solveAndSaveAntiderivative(req):
         body = json.loads(req.body)
         constants = body["constants"]
         antiderivativeId = body["antiderivativeId"]
-        print(antiderivativeId)
-        print(constants)
         antiderivative = Antiderivative.objects.get(id=antiderivativeId)
         solutionTemplate = antiderivative.solutionTemplate
         inputLatex = antiderivative.inputLatex
-        print(solutionTemplate)
-        print(inputLatex)
         input = parseAndEvaluateCurlys(inputLatex, constants, isFirst=True)
         solution = parseAndEvaluateCurlys(solutionTemplate, constants, isFirst=True)
-        print(input)
-        print(solution)
         if not req.user.is_anonymous:
             filledAntiderivative = FilledAntiderivative(preSolutionLatex=input, postSolutionLatex=solution, user=req.user)
             filledAntiderivative.save()

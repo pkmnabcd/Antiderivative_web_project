@@ -5,7 +5,7 @@ def evaluateFinishedCurlys(inside, constants):
         # Assume this is a constant
         return str(constants[inside])
     else:
-        print("Implement me", file=stderr)
+        print("Only one-char constants are currently implemented...", file=stderr)
 
 def findMatchingCurlys(substring):
     openCurlysList = []
@@ -38,7 +38,7 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
     innerCurlysPresent = len(openCurlysList) != 0
 
     if unequalCurlys:
-        print("Unexpected Input")
+        print("Unexpected Input with the input substring: " + substring)
         return "Error! Unexpected Input inside brackets"
     elif innerCurlysPresent:
         curlyCount = len(openCurlysList)
@@ -52,11 +52,9 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
             innerSubstring = substring[innerStartIndex : closeCurlyIndex]
             substringsToReplace[count] = {"innerSubstring": innerSubstring, "len": (len(innerSubstring) + 4), "position": openCurlyIndex}
             count += 1
-        print(substringsToReplace)
 
         for i in range(len(substringsToReplace)):
             innerData = substringsToReplace[i]
-            print(innerData)
             innerSubstring = innerData["innerSubstring"]
             innerLen = innerData["len"]
             innerPosition = innerData["position"]
@@ -68,17 +66,14 @@ def parseAndEvaluateCurlys(substring, constants, isFirst):
 
             removeStart = innerPosition
             removeEnd = innerPosition + innerLen - 1
-            print("removeStart:", str(removeStart), "\nremoveEnd:", str(removeEnd))
             # Taking out old, putting in replacement
             substring = substring[ : innerPosition] + replaceString + substring[removeEnd + 1 : ]
-            print(substring)
 
         if isFirst:
             return substring
         else:
             return evaluateFinishedCurlys(substring, constants)
     else:
-        print("No Curlys")
         if isFirst:
             return substring
         else:
