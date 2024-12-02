@@ -1,3 +1,19 @@
+# Antiderivative Project
+## Setup
+Once the repo is downloaded, navigate to client/ and run `npm install` to install the dependencies. Then navigate to _server/ and make sure that you have `poetry` installed on your computer, and run `poetry install` to install the server dependencies.
+## How to run
+Open two separate terminal instances, and use one to navigate to client/ and run `npm run dev` to set up the web environment. In the other instance, navigate to _server/ and run `poetry shell`, then run `python3 manage.py runserver`. Now you can access the app at `localhost:8000`.
+## Antiderivatives
+Antiderivatives are added through the `localhost:8000/admin` page. Make an admin account by running `python3 manage.py createsuperuser` and following those directions. Once you log into the admin page, add Antiderivative objects, adding the starting integral text into InputLatex, and adding the template of the solution into SolutionTemplate . Constants should be marked like this: `{;a;}` or `{;b;}`, with any single letter inside. Then make Constant models which correspond to those letter. Make the name of the Constant the same as what you put inside the `{; ;}`. Assign the Constant to the Antiderivative which it corresponds to.
+### Antiderivative Example
+* Antiderivative
+  * InputLatex: \int e^{{;a;}x}\cos({;b;}x)\,dx
+  * SolutionTemplate: e^{{;a;}x}\frac{{;b;}\sin({;b;}x)+{;a;}\cos({;b;}x)}{{;a;}^2+{;b;}^2}+C
+* Constant1
+  * Name: a
+* Constant2
+  * Name: b
+
 # 2610 Django + Vite Starting Point
 This project serves as a starting point you to use as a starting point for Django applications that use Vite as the asset server for development. You are welcome to us this project for all of your assignments beginning with Module 5.
 
