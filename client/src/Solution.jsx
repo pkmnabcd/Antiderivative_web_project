@@ -12,8 +12,10 @@ function Solution(props) {
 
   return (
     <div id="solution-container">
-      <h1>Temp Solution Page</h1>
-      <MathComponent tex={fullEqn} />
+      <h1>Solution</h1>
+      <div id="solution-math">
+        <MathComponent tex={fullEqn} />
+      </div>
     </div>
   )
 }
