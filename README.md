@@ -1,6 +1,6 @@
 # Antiderivative Project
 ## Setup
-Once the repo is downloaded, navigate to client/ and run `npm install` to install the dependencies. Then navigate to _server/ and make sure that you have `poetry` installed on your computer, and run `poetry install` to install the server dependencies.
+Once the repo is downloaded, navigate to client/ and run `npm install` to install the dependencies. Then navigate to _server/ and make sure that you have `poetry` installed on your computer, and run `poetry install` to install the server dependencies. Then, make sure to set up the expected `.env` file by running `cp .env.example .env`. 
 ## How to run
 Open two separate terminal instances, and use one to navigate to client/ and run `npm run dev` to set up the web environment. In the other instance, navigate to _server/ and run `poetry shell`, then run `python3 manage.py runserver`. Now you can access the app at `localhost:8000`.
 ## Antiderivatives
